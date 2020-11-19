@@ -7,104 +7,180 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <form class="container">
-        <header class="globalHeader">
-            <legend aria-hidden="true">이 문서의 기능을 설명하는 스크립트가 들어가야 합니다.</legend>
-            <h1>Title</h1>
-            <section class="searchForm">
-                <span class="locate">KR</span>
-                <input type="search" placeholder="소환사명을 입력해주세요" />
-                <button type="submit" onclick="return false;" class="buttonIcon buttonSearch material-icons">search</button>
-            </section>
-        </header>
-        <fieldset class="tableContainer">
+    <section class="container">
+        <form>
+            <header class="globalHeader">
+                <legend aria-hidden="true">이 문서의 기능을 설명하는 스크립트가 들어가야 합니다.</legend>
+                <h1>Title</h1>
+                <section class="searchForm">
+                    <button class="buttonText locate" disabled>KR</button>
+                    <input type="search" placeholder="소환사명을 입력해주세요" />
+                    <button type="submit" onclick="return false;" class="buttonIcon buttonSearch material-icons">search</button>
+                </section>
+            </header>
+            <fieldset class="tableContainer">
+                <header>
+                    <dl>
+                    <dt>{{소환사 이름}}</dt>
+                    <dd class="profile">
+                        <img src="./assets/profile.jpg" alt="{{소환사 이름}}" />
+                    </dd>
+                    </dl>
+                    <span>
+                        <button onclick="return false;" class="buttonText">전적 갱신</button>
+    
+                        <!-- 대기 중 -->
+                        <button onclick="return false;" class="buttonText" disabled>전적 갱신 <i class="material-icons">loop</i> 5분</button>
+                        <!-- /대기 중 -->
+                    </span>
+                </header>
+    
+                <section class="table">
+                    <ul>
+                    <li result="win">
+                        <span class="result">승리</span>
+                        <dl>
+                        <dt aria-hidden="true">챔피언</dt>
+                        <dd aria-hidden="true">누구누구</dd>
+                        <dd class="profile"><img src="./assets/profile.jpg" alt="누구누구" /></dd>
+                        </dl>
+                        <dl>
+                        <dt>2.2 KDA</dt>
+                        <dd>3 / 5 / 8</dd>
+                        </dl>
+                        <dl>
+                        <dt>0.81 시야/분</dt>
+                        <dd>킬관여율 29%</dd>
+                        </dl>
+                        <dl>
+                        <dt>5.5 CS/분</dt>
+                        <dd>149 CS</dd>
+                        </dl>
+                        <dl>
+                        <dt>분당 436 피해량</dt>
+                        <dd>아군 피해량의 16%</dd>
+                        </dl>
+                        <p>
+                            <span>27:13</span>
+                            <span>개인/2인 랭크</span>
+                        </p>
+                        <span>
+                            <button onclick="openDialog(true); return false;" class="buttonText">FEEDBACK</button>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="result">패배</span>
+                        <dl>
+                        <dt aria-hidden="true">챔피언</dt>
+                        <dd aria-hidden="true">누구누구</dd>
+                        <dd class="profile"><img src="./assets/profile.jpg" alt="누구누구" /></dd>
+                        </dl>
+                        <dl>
+                        <dt>2.2 KDA</dt>
+                        <dd>3 / 5 / 8</dd>
+                        </dl>
+                        <dl>
+                        <dt>0.81 시야/분</dt>
+                        <dd>킬관여율 29%</dd>
+                        </dl>
+                        <dl>
+                        <dt>5.5 CS/분</dt>
+                        <dd>149 CS</dd>
+                        </dl>
+                        <dl>
+                        <dt>분당 436 피해량</dt>
+                        <dd>아군 피해량의 16%</dd>
+                        </dl>
+                        <p>
+                            <span>27:13</span>
+                            <span>개인/2인 랭크</span>
+                        </p>
+                        <span>
+                            <button onclick="openDialog(true); return false;" class="buttonText">FEEDBACK</button>
+                        </span>
+                    </li>
+                    </ul>
+                    <p class="alert"><i class="material-icons">warning</i>클로즈드베타 중에는 최근 10경기 정보만 제공됩니다. 오픈베타를 기대해주세요 :)</p>
+                </section>
+            </fieldset>
+        </form>
+        <footer class="globalFooter"><copyright><i class="material-icons">copyright</i> 2020 statup.gg, all rights reserved.</copyright></footer>
+    </section>
+    
+    <!-- dialog 표시 attr: open -->
+    <dialog class="feedback">
+        <section class="contents">
+            <button onclick="openDialog(false);" class="buttonIcon buttonClose"><i class="material-icons">close</i></button>
+            <h2 aria-hidden="true">매치에서 사용자 상세 정보</h2>
             <header>
                 <dl>
-                <dt>{{소환사 이름}}</dt>
-                <dd class="profile">
-                    <img src="./assets/profile.jpg" alt="{{소환사 이름}}" />
-                </dd>
+                <dt aria-hidden="true">소환사 명</dt>
+                <dd>{{소환사 이름}}</dd>
+                <dd class="profile"><i class="img"><img src="./assets/profile.jpg" alt="" /></i><i class="level">13<span aria-hidden="true">레벨</span></i></dd>
+                <dd class="skill"><img src="./assets/profile.jpg" alt="" /><img src="./assets/profile.jpg" alt="" /><img src="./assets/profile.jpg" alt="" /></dd>
+                <dd class="ranking">8th</dd>
                 </dl>
-                <span>
-                    <button onclick="return false;" class="buttonText">전적 갱신</button>
-
-                    <!-- 대기 중 -->
-                    <button onclick="return false;" class="buttonText" disabled>전적 갱신 <span class="material-icons">loop</span> 5분</button>
-                    <!-- /대기 중 -->
-                </span>
+                <dl class="tier">
+                <dt aria-hidden="true">티어</dt>
+                <dd><i class="tierIcon"><img src="./assets/tier.png" alt="" /></i>B 2</dd>
+                </dl>
+                <p class="runes">
+                    <i><img src="./assets/runes.png" alt="" /></i>
+                    <i><img src="./assets/runes.png" alt="" /></i>
+                    <i><img src="./assets/runes.png" alt="" /></i>
+                    <i><img src="./assets/runes.png" alt="" /></i>
+                    <i><img src="./assets/runes.png" alt="" /></i>
+                    <i><img src="./assets/runes.png" alt="" /></i>
+                </p>
+                <dl class="result">
+                <dt>2.2KDA</dt>
+                <dd>3 / 5 / 8</dd>
+                </dl>
+                <dl class="result">
+                <dt>149 (5.5) CS</dt>
+                <dd>29% 킬관여</dd>
+                </dl>
+                <dl class="result">
+                <dt>11,888 Dmg</dt>
+                <dd class="percent"><i style="width:29%"><span aria-hidden="true">29%</span></i></dd>
+                </dl>
             </header>
-
-            <section class="table">
-                <ul>
-                <li result="win">
-                    <span class="result">승리</span>
-                    <dl>
-                    <dt aria-hidden="true">챔피언</dt>
-                    <dd aria-hidden="true">누구누구</dd>
-                    <dd class="profile"><img src="./assets/profile.jpg" alt="누구누구" /></dd>
-                    </dl>
-                    <dl>
-                    <dt>2.2 KDA</dt>
-                    <dd>3 / 5 / 8</dd>
-                    </dl>
-                    <dl>
-                    <dt>0.81 시야/분</dt>
-                    <dd>킬관여율 29%</dd>
-                    </dl>
-                    <dl>
-                    <dt>5.5 CS/분</dt>
-                    <dd>149 CS</dd>
-                    </dl>
-                    <dl>
-                    <dt>분당 436 피해량</dt>
-                    <dd>아군 피해량의 16%</dd>
-                    </dl>
-                    <p>
-                        <span>27:13</span>
-                        <span>개인/2인 랭크</span>
-                    </p>
-                    <span>
-                        <button onclick="return false;" class="buttonText">FEEDBACK</button>
-                    </span>
-                </li>
-                <li>
-                    <span class="result">패배</span>
-                    <dl>
-                    <dt aria-hidden="true">챔피언</dt>
-                    <dd aria-hidden="true">누구누구</dd>
-                    <dd class="profile"><img src="./assets/profile.jpg" alt="누구누구" /></dd>
-                    </dl>
-                    <dl>
-                    <dt>2.2 KDA</dt>
-                    <dd>3 / 5 / 8</dd>
-                    </dl>
-                    <dl>
-                    <dt>0.81 시야/분</dt>
-                    <dd>킬관여율 29%</dd>
-                    </dl>
-                    <dl>
-                    <dt>5.5 CS/분</dt>
-                    <dd>149 CS</dd>
-                    </dl>
-                    <dl>
-                    <dt>분당 436 피해량</dt>
-                    <dd>아군 피해량의 16%</dd>
-                    </dl>
-                    <p>
-                        <span>27:13</span>
-                        <span>개인/2인 랭크</span>
-                    </p>
-                    <span>
-                        <button onclick="return false;" class="buttonText">FEEDBACK</button>
-                    </span>
-                </li>
-                </ul>
-                <p class="alert">클로즈드베타 중에는 최근 10경기 정보만 제공됩니다. 오픈베타를 기대해주세요 :)</p>
+            <section class="consultant">
+                <div>
+                    <h3>초반 라인전 단계</h3>
+                    <p>10분대에 죽었습니다. 라인전 중에는 죽지 않는 것이 중요합니다. 죽으면 골드는 물론, 경험치도 얻지 못합니다. 게임 초반에 경험치는 골드보다 중요합니다.</p>
+                    <p>12분대에 집에 갔습니다.</p>
+                    <p>공성 미니언 타이밍이 아닐 때는 미니언 웨이브를 밀고, 공성 미니언이 오는 타이밍에 집에 가세요.</p>
+                    <p>13분대에 집에 갔습니다.</p>
+                    <p>13분대에 킬을 냈습니다. 킬을 내고 집에 가는 것은 잘했습니다. 킬을 내면, 대포미니언을 놓쳐도 집에 다녀오는 것이 좋습니다.</p>
+                    <p>15분대에 집에 갔습니다.</p>
+                    <p>15분대에 킬을 냈습니다. 킬을 내고 집에 가는 것은 잘했습니다. 킬을 내면, 대포미니언을 놓쳐도 집에 다녀오는 것이 좋습니다.</p>
+                    <p>공성 미니언 타이밍이 아닐 때는 미니언 웨이브를 밀고, 공성 미니언이 오는 타이밍에 집에 가세요.</p>
+                </div>
+                <div>
+                    <h3>중반 운영 단계</h3>
+                    <p class="notService">준비 중</p>
+                </div>
+                <div>
+                    <h3>후반 한타 단계</h3>
+                    <p class="notService">준비 중</p>
+                </div>
+                <p class="alert"><i class="material-icons">warning</i>클로즈드베타 중에는 초반 라이전 단계 정보만 제공됩니다. 오픈베타를 기대해주세요 :)</p>
             </section>
-        </fieldset>
-    </form>
-    <dialog class="feedback">
-        
+            <footer class="globalFooter"><copyright><i class="material-icons">copyright</i> 2020 statup.gg, all rights reserved.</copyright></footer>
+        </section>
     </dialog>
+
+    <script>
+        const openDialog = ($val) => {
+            let $dialog = document.getElementsByTagName("dialog")[0];
+            if (!$val) {
+                $dialog.removeAttribute("open");
+            }
+            else {
+                $dialog.setAttribute("open", $val);
+            }
+        }
+    </script>
 </body>
 </html>

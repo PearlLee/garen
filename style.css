@@ -367,11 +367,16 @@
       --primary600:#4a6572;
       --secondary:#795548;
       --input-background:rgba(52, 73, 85, 0.2);
+      --block-background:#eceff1;
+      --block-background-hover:#babdbe;
       --focus:#2286c3;
       --focus-background:rgba(74, 101, 114, 0.2);
       --focus-primary600:rgba(74, 101, 114, 0.8);
       --lose:#007ac1;
       --win:#b0003a;
+      --error:#ef6c00;
+      --consultant:#7986cb;
+      --disabled:#90a4ae;
       --textSize:14px;
   }
   
@@ -389,6 +394,8 @@
     font-weight:400;
     font-size:var(--textSize);
     line-height:1.05em;
+    overflow-wrap:break-word;
+    word-break:keep-all;
   }
 
   [aria-hidden="true"] {
@@ -415,7 +422,7 @@
   }
   .buttonIcon:disabled,
   .buttonText:disabled {
-    cursor:wait;
+    cursor:not-allowed;
     opacity:.5;
   }
 
@@ -428,6 +435,7 @@
     color:var(--background);
     font-weight:500;
   }
+  .buttonText:hover,
   .buttonText:focus {
       background-color:var(--focus-primary600);
   }
@@ -437,6 +445,7 @@
 
       border-radius:100%;
   }
+  .buttonIcon:hover,
   .buttonIcon:focus {
       background-color:var(--focus-background);
   }
@@ -449,6 +458,12 @@
 
       max-width:100vw;
       min-height:100vh;
+  }
+  .container > form {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
   }
   .globalHeader {
       margin-bottom:calc(var(--textSize) * 2);
@@ -464,11 +479,13 @@
     position:relative;
     width:50vw;
     max-width:600px;
+    margin:48px auto;
   }
   .searchForm > .locate {
     position:absolute;
     top:50%;
     left:12px;
+    min-height:0;
     margin-top:-.73em;
     padding:0 8px;
 
@@ -503,7 +520,9 @@
   }
   .tableContainer {
     width:60vw;
-    max-width:1200px;
+    min-width:1000px;
+    max-width:1400px;
+    margin:0 auto;
   }
   .tableContainer .profile {
     overflow:hidden;
@@ -545,6 +564,9 @@
     line-height:1.5em;
     vertical-align:middle;
   }
+  .tableContainer > header > span > .buttonText:disabled {
+    cursor:wait;
+  }
   @keyframes loop {
       0% {
           transform:rotate(0);
@@ -560,11 +582,12 @@
   .table {
       margin-top:2em;
   }
+  dialog.feedback p.alert,
   .table > p.alert,
   .table > ul {
     padding:1em 0;
 
-    background-color:var(--input-background);
+    background-color:var(--block-background);
     border-radius:1em;
   }
   .feedback > header,
@@ -577,7 +600,7 @@
     border-left:4px solid var(--lose);
   }
   .table > ul > li:hover {
-    background-color:rgba(255,255,255, .2);
+    background-color:var(--block-background-hover);
   }
   .table > ul > li[result="win"] {
       border-left-color:var(--win);
@@ -596,6 +619,17 @@
     color:var(--primary600);
     line-height:1.5em;
   }
+  .table > ul > li > dl:nth-child(3),
+  .table > ul > li > dl:nth-child(5) {
+    width:9%;
+  }
+  .table > ul > li > dl:nth-child(4),
+  .table > ul > li > p {
+    width:12%;
+  }
+  .table > ul > li > dl:nth-child(6) {
+    width:15%;
+  }
   .table > ul > li > .result + dl {
     margin-left:0;
   }
@@ -611,9 +645,275 @@
     display:block;
   }
 
+  .globalFooter {
+    padding-top:20px;
+
+    color:var(--primary600);
+    font-size:.85em;
+    text-align:center;
+  }
+  .container > .globalFooter {
+    margin-top:4em;
+    padding-bottom:1em;
+  }
+
+  dialog.feedback p.alert,
   .table > p.alert {
     margin:2em 10em;
     padding:2em;
 
+    color:var(--primary600);
+    font-weight:700;
     text-align:center;
+  }
+  dialog.feedback p.alert .material-icons,
+  .table > p.alert .material-icons {
+    margin-right:.2em;
+
+    color:var(--error);
+  }
+
+  dialog.feedback {
+    display:none;
+    justify-content:center;
+    align-items:center;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    overflow:auto;
+    width:auto;
+    height:auto;
+    max-width:100vw;
+    max-height:100vh;
+    padding:20px;
+
+    background-color:var(--focus-background);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);  
+    border:none;
+    box-sizing:border-box;
+  }
+  dialog.feedback[open] {
+    display:flex;
+  }
+  dialog.feedback .contents {
+    position:relative;
+    padding:0 20px 20px;
+
+    background-color:var(--background);
+    border:1px solid var(--primary600);
+    box-shadow:0 0 40px var(--input-background);
+    border-radius:20px;
+  }
+  dialog.feedback .buttonIcon.buttonClose {
+    position:absolute;
+    top:5px;
+    right:5px;
+    z-index:2;
+  }
+  dialog.feedback .buttonIcon.buttonClose .material-icons {
+    border-radius:100%;
+    color:var(--primary600);
+    font-size:28px;
+  }
+  dialog.feedback header {
+    display:flex;
+    align-items:center;
+    position:relative;
+    min-height:64px;
+    margin:0 -20px;
+    padding:30px 20px 10px 166px;
+
+    background-color:var(--block-background);
+    border-radius:20px 20px 0 0;
+  }
+  dialog.feedback header > dl,
+  dialog.feedback header > p {
+    margin-left:16px;
+  }
+  dialog.feedback header > dl:first-child {
+    margin-left:0;
+  }
+  dialog.feedback header > dl:first-child > dt + dd {
+    color:var(--primary600);
+    font-size:1.1em;
+    font-weight:700;
+  }
+  dialog.feedback header .profile,
+  dialog.feedback header .skill {
+    position:absolute;
+    top:50%;
+
+    transform:translateY(-50%);
+  }
+  dialog.feedback header .profile {
+    left:20px;
+  }
+  dialog.feedback header .profile .img {
+    display:block;
+    overflow:hidden;
+    width:64px;
+    height:64px;
+
+    border-radius:100%;
+  }
+  dialog.feedback header .profile .img img {
+    width:100%;
+    object-fit:cover;
+
+    vertical-align:top;
+  }
+  dialog.feedback header .profile .level {
+    position:absolute;
+    bottom:0;
+    right:0;
+    padding:4px;
+
+    background-color:var(--primary);
+    border-radius:100%;
+    color:var(--background);
+    font-size:.9em;
+    line-height:1em;
+    text-align:center;
+    transform:translate(4px, 4px);
+  }
+
+  dialog.feedback header .skill {
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    left:92px;
+    width:calc(2em + 6px);
+
+    font-size:28px;
+  }
+  dialog.feedback header .skill img {
+    width:1em;
+    height:1em;
+    margin:3px 0 0 3px;
+  }
+  dialog.feedback header .ranking {
+    display:inline-block;
+    margin-top:12px;
+    padding:2px 6px;
+
+    background-color:var(--primary600);
+    border-radius:.5em;
+    color:var(--background);
+    font-weight:700;
+    opacity:.5;
+  }
+
+  dialog.feedback header .tier {
+    color:var(--primary600);
+    font-weight:700;
+    font-size:.95em;
+    text-align:center;
+  }
+  dialog.feedback header .tier dd {
+    white-space:nowrap;
+  }
+  dialog.feedback header .tier i {
+    display:block;
+    width:24px;
+    height:24px;
+    margin:0 auto;
+  }
+  dialog.feedback header .tier i img {
+    width:100%;
+
+    object-fit:cover;
+    vertical-align:top;
+  }
+  
+  dialog.feedback header .runes {
+    display:flex;
+    align-items:center;
+
+    font-size:24px;
+  }
+  dialog.feedback header .runes > i {
+    display:inline-block;
+    width:1em;
+    margin-left:2px;
+  }
+  dialog.feedback header .runes i:first-child {
+    margin-left:0;
+  }
+  dialog.feedback header .runes img {
+    width:100%;
+
+    vertical-align:top;
+  }
+  dialog.feedback header .result dt {
+    color:var(--secondary);
+    font-weight:700;
+  }
+  dialog.feedback header .result dd {
+    margin-top:4px;
+
+    color:var(--primary600);
+  }
+  dialog.feedback header .result dd.percent {
+    overflow:hidden;
+    width:80px;
+    height:.5em;
+    margin:7px auto 4px;
+
+    background-color:var(--focus-background);
+    border-radius:.5em;
+  }
+  dialog.feedback header .result dd.percent i {
+    display:block;
+    height:.5em;
+
+    background-color:var(--error);
+    transition:.2s width ease-in-out;
+  }
+
+  dialog.feedback .consultant {
+    margin-top:30px;
+  }
+  dialog.feedback .consultant h3 {
+    margin:0 0 14px;
+
+    color:var(--secondary);
+    font-size:1.3em;
+  }
+  dialog.feedback .consultant > div:not(:first-child) {
+    margin-top:24px;
+  }
+  dialog.feedback .consultant > div > p {
+    max-width:85%;
+    margin:0 0 .5em;
+
+    line-height:1.5em;
+  }
+  dialog.feedback .consultant > div > p:not(.notService) {
+    padding-left:8px;
+
+    color:var(--consultant);
+    text-indent:-8px;
+  }
+  dialog.feedback .consultant > div > p:not(.notService):before {
+    display:inline-block;
+    width:4px;
+    height:4px;
+    margin:0 4px 0 -2px;
+
+    background-color:var(--focus-background);
+    content:'';
+    vertical-align:middle;
+    text-indent:0;
+  }
+  dialog.feedback .consultant > div > p.notService {
+    color:var(--disabled);
+  }
+  dialog.feedback p.alert {
+    margin-bottom:0;
+  }
+  dialog.feedback footer.globalFooter {
+    margin-top:24px;
   }
